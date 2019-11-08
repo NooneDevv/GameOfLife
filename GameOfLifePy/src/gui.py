@@ -1,7 +1,7 @@
+# This code is made available under the Creative Commons Zero 1.0 License (https://creativecommons.org/publicdomain/zero/1.0)
 from tkinter import *
 from GameOfLifePy.src.stopwatch import StopWatch
 import numpy as np
-import random
 
 
 class GUI:
@@ -11,6 +11,7 @@ class GUI:
 
         self.sw = StopWatch()
 
+        # Data variables
         self.hex_black = "#000000"
         self.hex_white = "#FFFFFF"
         self.height = height
@@ -23,7 +24,7 @@ class GUI:
         self.previous = np.zeros((self.height, self.width))
 
         self.root = Tk()
-
+        # DATA display
         self.iterations_count = StringVar()
         self.iterations_per_hour = StringVar()
         self.time_elapsed = StringVar()
@@ -32,14 +33,13 @@ class GUI:
 
         self.root.title("Game of Life")
         self.root.geometry(str(self.height * 7 + 240) + "x" + str(self.width * 7 + 10))
+
         # FRAMES
         self.board = Frame(self.root, height=self.height*7, width=self.width*7, pady=5, padx=5)
         self.options = Frame(self.root, height=self.height * 7, width=340, pady=5, padx=5)
         self.canvas = Canvas(self.board, height=self.height * 7, width=self.width * 7)
         # "STATIC" ELEMENTS
-        self.start_stop_button = Button(self.options, width=10, height=2, text="Start", bg="grey", fg="black")
-        self.reset_button = Button(self.options, width=10, height=2, text="Reset", bg="grey", fg="black",
-                                   command=self.reset)
+
         self.iter_label = Label(self.options, textvariable=self.iterations_count, width=25, relief="sunken")
         self.iter_ph_label = Label(self.options, textvariable=self.iterations_per_hour, width=25, relief="sunken")
         self.time_label = Label(self.options, textvariable=self.time_elapsed, width=25, relief="sunken")
@@ -49,6 +49,7 @@ class GUI:
         self.init_gui()
 
     def init_board(self, arr):
+        """Initializes the canvas element that displays the board"""
         self.previous = arr
         for row in range(self.height):
             for col in range(self.width):
@@ -64,8 +65,7 @@ class GUI:
         self.canvas.grid()
 
     def init_gui(self):
-        self.start_stop_button.grid(row=0, pady=10, sticky="N")
-        self.reset_button.grid(row=0, column=1, pady=10, sticky="N")
+
         self.iter_label.grid(row=1, columnspan=2, pady=5)
         self.cells_alive_label.grid(row=2, columnspan=2, pady=5)
         self.cells_dead_label.grid(row=3, columnspan=2, pady=5)
@@ -73,11 +73,12 @@ class GUI:
         self.time_label.grid(row=5, columnspan=2, pady=5)
 
     def draw(self, array):
+        """"""
         self.cell_count = np.count_nonzero(array == 1)
         if self.running:
             for row in range(self.height):
                 for col in range(self.width):
-                    if array[row][col] == 1 and self.previous[row][col] != 1:   # if state changed
+                    if array[row][col] == 1 and self.previous[row][col] != 1:   # If a cell's state changed
                         self.canvas.itemconfig(self.panel_array[row][col], fill=self.hex_black)
 
                     elif array[row][col] == 0 and self.previous[row][col] != 0:

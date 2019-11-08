@@ -1,3 +1,4 @@
+# This code is made available under the Creative Commons Zero 1.0 License (https://creativecommons.org/publicdomain/zero/1.0)
 """A helper class to assist with counting time."""
 import time
 
